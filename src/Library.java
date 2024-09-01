@@ -1,8 +1,8 @@
-import java.util.HashMap;
+import java.util.*;
 
 public class Library {
-    private HashMap<String, Book> books = new HashMap<>();
-
+    private Map<String, Book> books = new HashMap<>();
+    private Set<Book> sortedBooks = new TreeSet<>(BookComparator.getTitleAuthorYearComparator());
     public void addBook(String title, String author, int year) {
         if(!books.containsKey(title)) {
             Book newBook = new Book(title, author, year);
@@ -24,12 +24,14 @@ public class Library {
     }
 
     public void printBooks() {
+
+        sortedBooks.addAll(books.values());
         if(books.isEmpty()) {
             System.out.println("Библиотека пуста :(");
             return;
         }
         System.out.printf("\nКниг в библиотеке - %d\n", books.size());
-        for (Book book : books.values()) {
+        for (Book book : sortedBooks) {
             System.out.println(book);
         }
     }
